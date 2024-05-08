@@ -20,6 +20,13 @@ class HabitTile extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      child: ListTile(
+        title: Text(text),
+        leading: Checkbox(
+          value: isCompleted,
+          onChanged: onChanged,
+        )
+      ),
     );
   }
 }

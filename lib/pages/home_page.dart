@@ -5,6 +5,7 @@ import 'package:habittracker/database/habit_database.dart';
 import 'package:habittracker/models/habit.dart';
 import 'package:habittracker/util/habit_util.dart';
 import 'package:habittracker/widgets/drawer_widget.dart';
+import 'package:habittracker/widgets/habit_tile.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -92,7 +93,10 @@ class _HomePageState extends State<HomePage> {
 
         bool isCompletedToday = isHabitCompletedToday(habit.completedDays);
 
-        return 
+        return HabitTile(
+          text: habit.name, 
+          isCompleted: isCompletedToday, 
+          onChanged: onChanged)
       }
       );
   }
