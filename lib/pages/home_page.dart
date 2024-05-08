@@ -57,6 +57,17 @@ class _HomePageState extends State<HomePage> {
       )
     );
   }
+
+  void checkHabit(bool? value, Habit habit) {
+   
+
+if (value != null) {
+    context.read<HabitDatabase>().updateHabitCompletion(habit.id, value);
+    }
+
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +107,7 @@ class _HomePageState extends State<HomePage> {
         return HabitTile(
           text: habit.name, 
           isCompleted: isCompletedToday, 
-          onChanged: onChanged)
+          onChanged: (value) => checkHabit(value, habit));
       }
       );
   }

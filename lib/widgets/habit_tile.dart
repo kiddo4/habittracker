@@ -14,19 +14,20 @@ class HabitTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color:
-            isCompleted ? Colors.green : Theme.of(context).colorScheme.surface,
+        color: isCompleted
+            ? Colors.green
+            : Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(10),
       ),
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: ListTile(
-        title: Text(text),
-        leading: Checkbox(
-          value: isCompleted,
-          onChanged: onChanged,
-        )
-      ),
+          title: Text(text),
+          leading: Checkbox(
+            activeColor: Colors.green,
+            value: isCompleted,
+            onChanged: onChanged,
+          )),
     );
   }
 }
