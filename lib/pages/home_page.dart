@@ -63,6 +63,65 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void editHabit(Habit habit) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: TextField(
+          controller: textController,
+          decoration: InputDecoration(
+            hintText: 'Edit habit',
+          ),
+        ),
+        actions: [
+          MaterialButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              textController.clear();
+            },
+            child: const Text('Cancel'),
+          ),
+          MaterialButton(
+            onPressed: () {
+              String updatedHabitName = textController.text;
+              context
+                  .read<HabitDatabase>()
+                  .updateHabit(habit.id, updatedHabitName);
+              Navigator.of(context).pop();
+              textController.clear();
+            },
+            child: const Text('Save'),
+          )
+        ],
+      ),
+    );
+  }
+
+  void deleteHabit(Habit habit) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Habit'),
+        content: const Text('Are you sure you want to delete this habit?'),
+        actions: [
+          MaterialButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+          MaterialButton(
+            onPressed: () {
+              context.read<HabitDatabase>().deleteHabit(habit.id);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +162,9 @@ class _HomePageState extends State<HomePage> {
           return HabitTile(
               text: habit.name,
               isCompleted: isCompletedToday,
-              onChanged: (value) => checkHabit(value, habit));
+              onChanged: (value) => checkHabit(value, habit),
+              editHabit: (context) => editHabit(habit),
+              deleteHabit: (context) => deleteHabit(habit));
         });
   }
 }

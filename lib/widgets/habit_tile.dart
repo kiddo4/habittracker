@@ -11,6 +11,8 @@ class HabitTile extends StatelessWidget {
       {required this.text,
       required this.isCompleted,
       required this.onChanged,
+      required this.editHabit,
+      required this.deleteHabit,
       super.key});
 
   @override
