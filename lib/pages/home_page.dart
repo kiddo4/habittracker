@@ -22,50 +22,45 @@ class _HomePageState extends State<HomePage> {
   }
 
   final textController = TextEditingController();
-  
+
   void creatNewHabit() {
     showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: TextField(
-          controller: textController,
-          decoration: const InputDecoration(
-            hintText: 'Enter new habit',
-            ),
-        ),
-        actions: [
-          MaterialButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              textController.clear();
-            },
-            child: const Text('Cancel'),
-            ),
-          MaterialButton(
-            onPressed: () {
-              String newHabitName = textController.text;
+        context: context,
+        builder: (context) => AlertDialog(
+              content: TextField(
+                controller: textController,
+                decoration: const InputDecoration(
+                  hintText: 'Enter new habit',
+                ),
+              ),
+              actions: [
+                MaterialButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    textController.clear();
+                  },
+                  child: const Text('Cancel'),
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    String newHabitName = textController.text;
 
-              context.read<HabitDatabase>().addHabit(newHabitName);
-             
-              Navigator.of(context).pop();
+                    context.read<HabitDatabase>().addHabit(newHabitName);
 
-              textController.clear();
-            },
-            child: const Text('Add'),
-            )
-        ],
-      )
-    );
+                    Navigator.of(context).pop();
+
+                    textController.clear();
+                  },
+                  child: const Text('Add'),
+                )
+              ],
+            ));
   }
 
   void checkHabit(bool? value, Habit habit) {
-   
-
-if (value != null) {
-    context.read<HabitDatabase>().updateHabitCompletion(habit.id, value);
+    if (value != null) {
+      context.read<HabitDatabase>().updateHabitCompletion(habit.id, value);
     }
-
-    
   }
 
   @override
@@ -75,40 +70,40 @@ if (value != null) {
       appBar: AppBar(),
       drawer: const MyDrawer(),
       floatingActionButton: FloatingActionButton.extended(
-      onPressed: creatNewHabit,
-      elevation: 0,
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
-      icon: const Icon(
-        Icons.add,
-        color: Colors.black,
+        onPressed: creatNewHabit,
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        icon: const Icon(
+          Icons.add,
+          color: Colors.black,
         ),
-      label: const Text(
-        'Add',
-        style: TextStyle(color: Colors.black,),
+        label: const Text(
+          'Add',
+          style: TextStyle(
+            color: Colors.black,
+          ),
         ),
       ),
       body: _buildHabitList(),
     );
-    
   }
-  Widget _buildHabitList() {
 
+  Widget _buildHabitList() {
     final habitDatabase = context.watch<HabitDatabase>();
 
     List<Habit> currentHabits = habitDatabase.currentHabits;
 
     return ListView.builder(
-      itemCount: currentHabits.length,
-      itemBuilder: (context, index) {
-        final habit = currentHabits[index];
+        itemCount: currentHabits.length,
+        itemBuilder: (context, index) {
+          final habit = currentHabits[index];
 
-        bool isCompletedToday = isHabitCompletedToday(habit.completedDays);
+          bool isCompletedToday = isHabitCompletedToday(habit.completedDays);
 
-        return HabitTile(
-          text: habit.name, 
-          isCompleted: isCompletedToday, 
-          onChanged: (value) => checkHabit(value, habit));
-      }
-      );
+          return HabitTile(
+              text: habit.name,
+              isCompleted: isCompletedToday,
+              onChanged: (value) => checkHabit(value, habit));
+        });
   }
 }
