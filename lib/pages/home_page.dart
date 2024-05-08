@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:habittracker/config/theme/theme_provider.dart';
 import 'package:habittracker/database/habit_database.dart';
 import 'package:habittracker/models/habit.dart';
+import 'package:habittracker/util/habit_util.dart';
 import 'package:habittracker/widgets/drawer_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -89,7 +90,9 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (context, index) {
         final habit = currentHabits[index];
 
-        bool isCompletedToday = isCompletedToday();
+        bool isCompletedToday = isHabitCompletedToday(habit.completedDays);
+
+        return 
       }
       );
   }
