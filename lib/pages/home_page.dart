@@ -145,34 +145,29 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: ListView(
-        children: [
-
-          _buildHabitList()
-        ]
-      ),
+      body: ListView(children: [_buildHeatMap(), _buildHabitList()]),
     );
   }
 
-  Widget _buildHeatMap () {
+  Widget _buildHeatMap() {
     final habitDatabase = context.watch<HabitDatabase>();
 
     List<Habit> currentHabits = habitDatabase.currentHabits;
 
     return FutureBuilder<DateTime?>(
-      future: habitDatabase.getFirstLaunchDate(),
-       builder: (context, snapshot) {
-         if (snapshot.hasData) {
-           return HeatMapCal(
-             startDate: snapshot.data!,
-             datasets: getDatasets(currentHabits),
-           );
-       } else {
-         return Center(
-           child: Container(),
-         );
-       }}
-       );
+        future: habitDatabase.getFirstLaunchDate(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return HeatMapCal(
+              startDate: snapshot.data!,
+              datasets: getDatasets(currentHabits),
+            );
+          } else {
+            return Center(
+              child: Container(),
+            );
+          }
+        });
   }
 
   Widget _buildHabitList() {
@@ -181,6 +176,8 @@ class _HomePageState extends State<HomePage> {
     List<Habit> currentHabits = habitDatabase.currentHabits;
 
     return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: currentHabits.length,
         itemBuilder: (context, index) {
           final habit = currentHabits[index];
