@@ -72,7 +72,8 @@ class _HomePageState extends State<HomePage> {
         content: TextField(
           controller: textController,
           decoration: InputDecoration(
-            hintText: 'Edit habit',
+            hintText: habit.name,
+            
           ),
         ),
         actions: [
