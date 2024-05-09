@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:habittracker/config/theme/theme_provider.dart';
 import 'package:habittracker/database/habit_database.dart';
 import 'package:habittracker/models/habit.dart';
 import 'package:habittracker/util/habit_util.dart';
 import 'package:habittracker/widgets/drawer_widget.dart';
 import 'package:habittracker/widgets/habit_tile.dart';
+import 'package:habittracker/widgets/heat_map.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -143,8 +145,34 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: _buildHabitList(),
+      body: ListView(
+        children: [
+
+          _buildHabitList()
+        ]
+      ),
     );
+  }
+
+  Widget _buildHeatMap () {
+    final habitDatabase = context.watch<HabitDatabase>();
+
+    List<Habit> currentHabits = habitDatabase.currentHabits;
+
+    return FutureBuilder<DateTime?>(
+      future: habitDatabase.getFirstLaunchDate(),
+       builder: (context, snapshot) {
+         if (snapshot.hasData) {
+           return HeatMapCal(
+             startDate: snapshot.data!,
+             datasets: getDatasets(currentHabits),
+           );
+       } else {
+         return Center(
+           child: Container(),
+         );
+       }}
+       );
   }
 
   Widget _buildHabitList() {

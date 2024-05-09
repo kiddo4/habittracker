@@ -18,32 +18,27 @@ class HabitTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),,
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: Slidable(
-        endActionPane: ActionPane(
-          motion: const StretchMotion(), 
-          children: [
-            SlidableAction(
-              onPressed: editHabit,
-              icon: Icons.edit,
-              backgroundColor: Colors.grey.shade800,
-              borderRadius: BorderRadius.circular(10),
-      
-              ),
-      
-              SlidableAction(
+        endActionPane: ActionPane(motion: const StretchMotion(), children: [
+          SlidableAction(
+            onPressed: editHabit,
+            icon: Icons.edit,
+            backgroundColor: Colors.grey.shade800,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          SlidableAction(
             onPressed: deleteHabit,
             icon: Icons.delete,
-            backgroundColor:  Colors.red,
+            backgroundColor: Colors.red,
             borderRadius: BorderRadius.circular(10),
           )
-          ]),
+        ]),
         child: GestureDetector(
           onTap: () {
             if (onChanged != null) {
               onChanged!(!isCompleted);
             }
-            
           },
           child: Container(
             decoration: BoxDecoration(
@@ -53,9 +48,11 @@ class HabitTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             padding: const EdgeInsets.all(8),
-            
             child: ListTile(
-                title: Text(text),
+                title: Text(text,
+                    style: TextStyle(
+                      color: isCompleted ? Colors.white : Colors.black,
+                    )),
                 leading: Checkbox(
                   activeColor: Colors.green,
                   value: isCompleted,
